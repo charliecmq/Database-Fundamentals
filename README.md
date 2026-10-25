@@ -1,4 +1,4 @@
-# 📚 E-Bookstore Database System
+# E-Bookstore Database System
 
 A relational database system for an **online electronic bookstore (E-Bookstore)**, designed and implemented in Microsoft SQL Server. The system models the full business cycle of an online book retailer: restocking from publishers, member registration and shopping, sales and delivery, reviews, and invoicing.
 
