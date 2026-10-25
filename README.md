@@ -1,62 +1,46 @@
 # 📚 E-Bookstore Database System
 
+A relational database system for an **online electronic bookstore (E-Bookstore)** — designed and implemented in Microsoft SQL Server. The system models the full business cycle of an online book retailer: restocking from publishers, member registration and shopping, sales and delivery, reviews, and invoicing.
+
 ## 📌 Overview
 
-This project designs, implements, and documents a relational database system for an **online electronic bookstore (E-Bookstore)** based in Kuala Lumpur, Malaysia.
+A bookstore in Kuala Lumpur, Malaysia holds a large collection of books in its warehouse. It orders books of various genres from different publishers and sells them to customers. To reach more customers, the business wants an **online store**, which requires a database to manage books, members, orders, reviews, and the restocking supply chain.
 
-The bookstore purchases books of various genres from publishers, stores them in a warehouse, and sells them to registered members through an online store. The database manages the full business cycle — from restocking books via purchase orders, through member registration and online shopping, to sales, delivery, reviews, and invoicing.
-
-This was developed as a coursework project for the **Database Fundamentals (ODBF)** module, covering conceptual design (ER modelling), logical design, physical implementation (DDL), and data manipulation (DML) queries that answer real business questions.
+This project designs and implements that database — from conceptual data modelling (ER design) through to a working SQL Server schema with sample data and example queries that answer real business questions.
 
 ## 🎯 Objectives
 
-- Design a normalized relational database for the E-Bookstore scenario.
-- Model the business using an Entity Relationship Diagram (ER diagram).
-- Implement the schema in Microsoft SQL Server using Data Definition Language (DDL).
-- Populate the tables with sample data using Data Manipulation Language (DML).
-- Write DML queries that answer key business questions about books, members, publishers, sales, and reviews.
+- Design a normalized relational schema for an online bookstore.
+- Model the business domain with an Entity Relationship Diagram.
+- Implement the schema in Microsoft SQL Server (DDL with primary/foreign keys and constraints).
+- Populate the database with realistic sample data.
+- Provide example queries that demonstrate joins, aggregation, subqueries, and filtering against the schema.
 
-## 📊 Data Source
+## 🧩 Problem Statement
 
-The database scenario, business rules, and requirements were provided as part of the **Database Fundamentals (ODBF) course assignment**. No external dataset is used — all records are synthetic sample data created specifically for this project to demonstrate the schema and queries.
-
-## 🛠️ Tools & Technologies
-
-- **Microsoft SQL Server** — relational database engine
-- **Azure Data Studio** — SQL development and query execution
-- **Docker** — containerized SQL Server instance
-- **T-SQL** — Data Definition Language (DDL) and Data Manipulation Language (DML)
-- **Microsoft Visio** (or similar) — ER diagram design
-
-## 🗂️ Database Design
-
-### Business Rules
-
-- The bookstore purchases books from **publishers** and sells them to **members**.
-- The store manager compiles needed books and sends **purchase orders** to publishers; the publisher supplies the ordered books.
+- The bookstore purchases books from **publishers** and sells them to **members**. The store manager compiles a list of needed books and sends a **purchase order** to publishers; the publisher supplies the ordered books.
 - Arriving books are recorded, and an **invoice** is generated for the accounts department to process payment.
-- Anyone wishing to buy books online must first **register as a member**. Members can view book information and read reviews.
-- Members add books to a **shopping cart**, which shows a summary of the selection and total cost.
-- Once payment is made, books are delivered to the member within **7 working days**.
-- A member may submit a **review** for a book as a rating (1–10, where 1 = terrible and 10 = masterpiece) with optional short text.
-- **Only one review per member per book** is allowed, and reviews cannot be changed once submitted.
+- Customers must **register as members** before buying online. Members can view book information and read reviews.
+- Members add books to a **shopping cart** that shows the selection summary and total cost. After payment, books are delivered within **7 working days**.
+- A member can **review** a book with a rating (1–10, where 1 = terrible and 10 = masterpiece) and optional short text. Only **one review per member per book** is allowed, and reviews cannot be edited once submitted.
 
-### Entity Relationship Diagram
+## 🛠️ Tech Stack
 
-![ER Diagram](images/er-diagram.png)
+- **Microsoft SQL Server 2022** — relational database engine
+- **Docker** — containerized SQL Server instance
+- **Azure Data Studio** — SQL development and query execution
+- **T-SQL** — schema definition (DDL) and queries (DML)
 
-### Database Diagram
+## 🗺️ Database Schema
 
-![Database Diagram](images/database-diagram.png)
+![Database Schema](images/final.svg)
 
 ### Entities
-
-The database consists of the following tables:
 
 | Table | Description |
 |---|---|
 | `Publishers` | Publishers that supply books to the store. |
-| `Books` | Book catalogue, including title, author, genre, price, and stock. |
+| `Books` | Book catalogue: title, author, genre, price, and stock quantity. |
 | `Members` | Registered customers who can shop and review. |
 | `ShoppingCart` | A member's active cart. |
 | `CartItems` | Line items (books and quantities) within a shopping cart. |
@@ -67,38 +51,67 @@ The database consists of the following tables:
 | `PurchaseOrderDetails` | Line items for each purchase order. |
 | `Invoices` | Invoices generated from purchase orders. |
 
-## 🔍 Business Queries (DML)
+## 🚀 Getting Started
 
-The project includes ten DML queries that answer the following business questions:
+### Prerequisites
 
-1. Total number of reviews (feedback) per book — showing book ID, title, and count.
-2. Total number of reviews per member — showing member ID, name, and count.
-3. Total number of books published by each publisher — showing publisher ID, name, and count.
-4. Total number of books in each genre.
-5. Books whose quantity is greater than the average quantity of all books.
-6. Total number of books ordered by the store manager from various publishers.
-7. Members who did not make any order.
-8. The genre with the highest total quantity in stock.
-9. Purchased books not yet delivered — showing member ID, address, contact number, book serial number, title, quantity, delivery date, and delivery status.
-10. Members who made more than two orders.
+- [Docker](https://www.docker.com/)
+- [Azure Data Studio](https://learn.microsoft.com/en-us/azure-data-studio/) (or `sqlcmd`)
 
-> The SQL for these queries is provided in `sql/` (see Repository Contents).
+### 1. Run SQL Server in Docker
 
-## ⚠️ Limitations
+```bash
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=YourStrong!Passw0rd" \
+  -p 1433:1433 --name ebookstore-sql \
+  -d mcr.microsoft.com/mssql/server:2022-latest
+```
 
-- The database uses a limited set of synthetic sample data (5–10 rows per table) intended to demonstrate the schema and queries, not to reflect real transaction volumes.
-- The design reflects the scope of the course scenario and selected business rules; a production system would require additional considerations such as security, indexing strategy, payment integration, and concurrency handling.
+### 2. Connect
+
+Open Azure Data Studio and connect to:
+- **Server:** `localhost`
+- **User:** `sa`
+- **Password:** the password you set above
+
+### 3. Build the database
+
+Run the scripts in this order:
+
+```
+1. sql/schema.sql        -- creates the tables, keys, and constraints
+2. sql/sample_data.sql   -- loads sample records
+3. sql/queries.sql       -- run the example queries
+```
+
+## 🔍 Example Queries
+
+The `sql/queries.sql` script demonstrates the database with queries such as:
+
+- Total number of reviews per book (book ID, title, count).
+- Total number of reviews per member (member ID, name, count).
+- Number of books published by each publisher.
+- Number of books in each genre.
+- Books with stock quantity above the average of all books.
+- Total number of books ordered by the store manager from publishers.
+- Members who have not placed any order.
+- The genre with the highest total quantity in stock.
+- Purchased books not yet delivered (member ID, address, contact, book serial number, title, quantity, delivery date and status).
+- Members who placed more than two orders.
+
+These show common SQL patterns — `JOIN`, `GROUP BY`, `HAVING`, aggregate functions, and subqueries.
+
+## ⚠️ Notes & Limitations
+
+- The database is populated with a small set of synthetic sample data to demonstrate the schema and queries, not real transaction volumes.
+- The design focuses on the core retail/supply-chain domain. A production deployment would add security hardening, indexing strategy, payment-gateway integration, and concurrency handling.
 
 ## 🗄️ Repository Contents
 
-- `sql/` — SQL scripts (schema/DDL, sample data, and the business queries).
-- `images/` — ER diagram, database diagram, and execution screenshots.
-- `docs/` — the original assignment brief and the full project documentation/report.
+- `sql/` — SQL scripts: schema (DDL), sample data, and example queries.
+- `images/` — database schema diagram (`final.svg`) and optional query screenshots.
 - `README.md` — project documentation.
 - `LICENSE` — license terms for this repository.
 
 ## 👤 Author
 
 **Chin Mun Qin**
-
-Developed as an academic coursework project for the Database Fundamentals (ODBF) module, covering relational database design and implementation in Microsoft SQL Server.

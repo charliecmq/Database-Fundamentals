@@ -1,11 +1,11 @@
 # SQL Scripts
 
-This folder contains the Microsoft SQL Server (T-SQL) scripts for the E-Bookstore Database System.
+Microsoft SQL Server (T-SQL) scripts for the E-Bookstore Database System.
 
-Suggested files:
+Suggested files (run in this order):
 
-- **Schema / DDL** — `CREATE TABLE` statements with primary keys, foreign keys, and constraints.
-- **Sample data / DML inserts** — `INSERT` statements (5–10 rows per table).
-- **Business queries** — the ten DML queries (i–x) described in the main README.
+1. `schema.sql` — `CREATE TABLE` statements with primary keys, foreign keys, and constraints.
+2. `sample_data.sql` — `INSERT` statements with sample records.
+3. `queries.sql` — example queries demonstrating the schema.
 
-> Upload your `.sql` file(s) here. If you keep everything in one combined script, that is fine — just place it in this folder.
+> Upload your `.sql` file(s) here. A single combined script is also fine — just place it in this folder and adjust the Getting Started steps in the main README if needed.

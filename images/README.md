@@ -1,14 +1,11 @@
 # Images
 
-This folder holds the diagrams and screenshots for the E-Bookstore Database System.
+This folder holds the schema diagram and any screenshots for the E-Bookstore Database System.
 
-Expected images (referenced by the main README):
-
-- `er-diagram.png` — the Entity Relationship Diagram (Chen's or Crow's Foot notation).
-- `database-diagram.png` — the database diagram generated from SQL Server.
+- `final.svg` — the database schema diagram (referenced by the main README).
 
 Optional:
 
-- `screenshots/` — screenshots of DDL/DML execution and query results for the documentation.
+- `screenshots/` — screenshots of query results.
 
-> Upload your image files here using the exact names above so they display correctly in the README.
+> Upload `final.svg` here so it displays in the README.
