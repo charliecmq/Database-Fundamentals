@@ -31,7 +31,17 @@ This project designs and implements that database — from conceptual data model
 - **Azure Data Studio** — SQL development and query execution
 - **T-SQL** — schema definition (DDL), sample data, and queries (DML)
 
-## 🗺️ Database Schema
+## 🗺️ Database Design
+
+### Entity Relationship Diagram (ERD)
+
+The conceptual model showing the entities and the relationships between them.
+
+![Entity Relationship Diagram](ERD%20diagram.png)
+
+### Database Schema
+
+The physical schema as implemented in SQL Server — tables, columns, primary keys, and foreign keys.
 
 ![Database Schema](final.svg)
 
@@ -85,8 +95,8 @@ These demonstrate common SQL patterns — `JOIN`, `GROUP BY`, `HAVING`, aggregat
 ## 🗄️ Repository Contents
 
 - `E-Bookstore Database System.sql` — complete SQL script: database creation, all tables, sample data, and example queries.
-- `final.svg` — database schema / entity relationship diagram.
-- `ERD diagram.png` — entity relationship diagram (image export).
+- `ERD diagram.png` — Entity Relationship Diagram (conceptual model of entities and relationships).
+- `final.svg` — database schema diagram (physical tables, columns, and keys).
 - `README.md` — project documentation.
 - `LICENSE` — license terms for this repository.
 
