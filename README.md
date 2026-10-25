@@ -4,9 +4,9 @@ A relational database system for an **online electronic bookstore (E-Bookstore)*
 
 ## 📌 Overview
 
-A bookstore in Kuala Lumpur, Malaysia holds a large collection of books in its warehouse. It orders books of various genres from different publishers and sells them to customers. To reach more customers, the business wants an **online store**, which requires a database to manage books, members, orders, reviews, and the restocking supply chain.
+A bookstore in Kuala Lumpur, Malaysia holds a large collection of books in its warehouse and currently manages procurement, inventory, and sales through manual processes. As the business grows, it wants to **digitalize operations** with a centralized online store, which requires a database to manage books, members, orders, reviews, and the restocking supply chain.
 
-This project designs and implements that database — from conceptual data modelling (ER design) through to a working SQL Server schema with sample data and queries that answer real business questions.
+This project designs and implements that **centralized E-Bookstore Database System** — from conceptual data modelling (ER design) through to a working SQL Server schema with sample data and queries that answer real business questions. A single database centralizes all book, publisher, member, order, and review data, reducing duplication, enforcing data integrity through constraints, and giving the bookstore accurate, up-to-date information for day-to-day operations and decision-making.
 
 ## 🎯 Objectives
 
@@ -16,13 +16,39 @@ This project designs and implements that database — from conceptual data model
 - Populate the database with realistic sample data.
 - Provide queries that demonstrate joins, aggregation, subqueries, and filtering against the schema.
 
-## 🧩 Problem Statement
+## 🧩 How It Works
 
 - The bookstore purchases books from **publishers** and sells them to **members**. The store manager compiles a list of needed books and sends a **purchase order** to publishers; the publisher supplies the ordered books.
 - Arriving books are recorded, and an **invoice** is generated for the accounts department to process payment.
 - Customers must **register as members** before buying online. Members can view book information and read reviews.
 - Members add books to a **shopping cart** that shows the selection summary and total cost. After payment, books are delivered within **7 working days**.
 - A member can **review** a book with a rating (1–10, where 1 = terrible and 10 = masterpiece) and optional short text. Only **one review per member per book** is allowed, and reviews cannot be edited once submitted.
+
+## 📏 Business Rules
+
+The schema enforces the following key rules through primary keys, foreign keys, and constraints:
+
+**Integrity**
+- Every table has a unique, non-null primary key (`BookID`, `MemberID`, `PublisherID`, etc.), and all foreign keys are enforced to prevent orphan records.
+- `Email` is unique for both publishers and members.
+- A book's `UnitPrice` cannot be zero or negative, and mandatory book fields (serial number, title, author, genre) must be filled.
+
+**Publishers & Books**
+- A publisher can publish many books and receive many purchase orders; each book belongs to exactly one publisher.
+- A book can appear in many sales and shopping carts and receive many reviews.
+
+**Members, Cart & Sales**
+- A customer must register as a member before purchasing. Each member owns at most **one shopping cart** at a time, and a cart cannot contain duplicate entries for the same book.
+- A member can place many sales orders, but each sale belongs to exactly one member, and a sale's total must equal the sum of its line items.
+- Delivery is promised within **7 working days**; `DeliveryDate` stays `NULL` until `DeliveryStatus` becomes `Delivered`.
+
+**Reviews**
+- Ratings must be between **1 and 10**; feedback text is optional.
+- A member can review a given book **only once**, and reviews cannot be changed after submission.
+
+**Purchase Orders & Invoices**
+- A purchase order is linked to exactly one publisher and one invoice, and may contain multiple books.
+- An invoice cannot exist without a purchase order; `PaymentDate` stays `NULL` until the invoice is marked `Paid`.
 
 ## 🛠️ Tech Stack
 
